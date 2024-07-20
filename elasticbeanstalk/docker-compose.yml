@@ -1,7 +1,8 @@
-version: "3.9"
+version: "3.8"
 services:
-  backend:
-    image: "woohobi/deployment:latest"
+  springboot:
+    image: "decomin02/springboot-demo"
     ports:
       - "80:8080"
     restart: "always"
+
