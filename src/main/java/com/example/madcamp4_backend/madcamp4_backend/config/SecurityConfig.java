@@ -24,11 +24,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/users/register", "/api/users/login").permitAll() // 사용자 등록 및 로그인 엔드포인트는 인증 없이 접근 가능
+                        .requestMatchers("/users/register", "/users/login").permitAll() // 사용자 등록 및 로그인 엔드포인트는 인증 없이 접근 가능
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/api/users/login") // 로그인 폼의 URL을 정의
+                        .loginPage("/users/login") // 로그인 폼의 URL을 정의
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll
