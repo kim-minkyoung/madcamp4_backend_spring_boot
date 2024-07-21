@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'adoptopenjdk'
+          distribution: 'adoptium' # Use 'adoptium' instead of 'adoptopenjdk'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
