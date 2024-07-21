@@ -11,29 +11,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Remove containerd if installed
-        run: |
-          sudo apt-get remove -y containerd || true
-
-      - name: Install containerd.io
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y containerd.io
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'temurin' # Use 'temurin' instead of 'adoptium'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        run: ./gradlew build
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker image
+      - name: Build and Push Docker image
         run: |
           docker buildx build --tag ${{ secrets.DOCKER_HUB_USERNAME }}/madcamp4_backend:latest --push .
 

@@ -4,7 +4,15 @@
 #ENTRYPOINT ["top", "-b"]
 
 FROM amazoncorretto:17
-COPY build/libs/*.jar spring-base.jar
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the JAR file into the container
+COPY build/libs/*.jar app.jar
+
+# Expose port 8080
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/spring-base.jar"]
+# Define the command to run the JAR file
+ENTRYPOINT ["java", "-jar", "app.jar"]
