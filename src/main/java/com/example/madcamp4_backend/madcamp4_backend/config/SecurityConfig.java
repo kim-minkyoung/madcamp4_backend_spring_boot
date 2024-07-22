@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/users/register", "/users/login", "/users", "/users/**").permitAll() // 사용자 등록 및 로그인 엔드포인트는 인증 없이 접근 가능
+                        .requestMatchers( "/users/**").permitAll() // 사용자 등록 및 로그인 엔드포인트는 인증 없이 접근 가능
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
