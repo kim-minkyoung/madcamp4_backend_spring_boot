@@ -54,4 +54,15 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
+
+    @RestController
+    public class TestController {
+
+        @GetMapping("/home")
+        public ResponseEntity<String> home() {
+            return ResponseEntity.ok("Home page is working");
+        }
+    }
+
+
 }
