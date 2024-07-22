@@ -24,7 +24,7 @@ public class ProjectConfig {
                 .cors(c -> {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(List.of("http://localhost:3000")); // 혹은 "*"로 모든 출처 허용
+                        config.setAllowedOrigins(List.of("*")); // 혹은 "*"로 모든 출처 허용
                         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                         config.setAllowedHeaders(List.of("*"));
 
