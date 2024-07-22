@@ -24,9 +24,10 @@ public class ProjectConfig {
                 .cors(c -> {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(List.of("*")); // 혹은 "*"로 모든 출처 허용
+                        config.setAllowedOrigins(List.of("*"));
                         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                         config.setAllowedHeaders(List.of("*"));
+                        config.addExposedHeader("Authorization");
 
                         // 콘솔 로그 찍기
                         logger.info("CORS configuration applied with allowed origins: " + config.getAllowedOrigins());
