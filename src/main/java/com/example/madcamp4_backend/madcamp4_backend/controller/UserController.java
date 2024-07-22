@@ -1,9 +1,12 @@
 package com.example.madcamp4_backend.madcamp4_backend.controller;
 
+import com.example.madcamp4_backend.madcamp4_backend.model.User;
 import com.example.madcamp4_backend.madcamp4_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -43,5 +46,12 @@ public class UserController {
         } else {
             return ResponseEntity.status(401).body("Invalid username or password");
         }
+    }
+
+    // 모든 사용자 조회
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }
