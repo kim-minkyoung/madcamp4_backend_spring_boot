@@ -10,28 +10,36 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Configuration
 @EnableWebSecurity
 public class ProjectConfig {
+
+    private static final Logger logger = Logger.getLogger(ProjectConfig.class.getName());
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(c -> {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(List.of("http://localhost:3000"));
-                        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+                        config.setAllowedOrigins(List.of("http://localhost:3000")); // 혹은 "*"로 모든 출처 허용
+                        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        config.setAllowedHeaders(List.of("*"));
+
+                        // 콘솔 로그 찍기
+                        logger.info("CORS configuration applied with allowed origins: " + config.getAllowedOrigins());
+
                         return config;
                     };
                     c.configurationSource(source);
                 })
-                .csrf(AbstractHttpConfigurer::disable)  // csrf 비활성화
-                .authorizeHttpRequests(authz -> authz.anyRequest().permitAll());  // 인증되지 않아도 모든 요청 허용
+                .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
+                .authorizeHttpRequests(authz -> authz.anyRequest().permitAll());  // 모든 요청 허용
 
-//    http
-//        .csrf(AbstractHttpConfigurer::disable)  // csrf 비활성화
-//        .authorizeHttpRequests(authz -> authz.anyRequest().permitAll());  // 인증되지 않아도 모든 요청 허용
+        // 콘솔 로그 찍기
+        logger.info("SecurityFilterChain configured.");
 
         return http.build();
     }
