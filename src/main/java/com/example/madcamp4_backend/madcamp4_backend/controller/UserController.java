@@ -2,6 +2,7 @@ package com.example.madcamp4_backend.madcamp4_backend.controller;
 
 import com.example.madcamp4_backend.madcamp4_backend.model.User;
 import com.example.madcamp4_backend.madcamp4_backend.service.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public List<User> getUsers(@RequestParam(required = false) String name) {
         if (name != null) {
