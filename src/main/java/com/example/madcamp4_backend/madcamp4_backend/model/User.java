@@ -16,7 +16,7 @@ public class User {
     private Long id;
 
     @Column(name = "user_name", nullable = false, unique = true)
-    private String username;
+    private String name;
 
     @Column(name = "user_dorm")
     private String dorm;
@@ -28,8 +28,8 @@ public class User {
     public User() {}
 
     // 모든 필드를 포함하는 생성자 (선택적)
-    public User(String username, String password, String dorm) {
-        this.username = username;
+    public User(String name, String password, String dorm) {
+        this.name = name;
         this.password = password;
         this.dorm = dorm;
     }
@@ -43,12 +43,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getname() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public String getDorm() {
