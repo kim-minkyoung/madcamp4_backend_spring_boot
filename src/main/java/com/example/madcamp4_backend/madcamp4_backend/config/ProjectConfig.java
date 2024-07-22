@@ -25,13 +25,14 @@ public class ProjectConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("*"));  // 모든 출처 허용
-        config.setAllowedMethods(Collections.singletonList("*"));   // 모든 HTTP 메서드 허용
-        config.setAllowedHeaders(Collections.singletonList("*"));   // 모든 헤더 허용
+        // 아래의 origin은 실제 출처로 변경해야 합니다
+        config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+        config.setAllowedMethods(Collections.singletonList("*"));  // 모든 HTTP 메서드 허용
+        config.setAllowedHeaders(Collections.singletonList("*"));  // 모든 헤더 허용
         source.registerCorsConfiguration("/**", config);
 
         http
-                .cors(cors -> cors.configurationSource(source)) // Spring Security CORS 설정
+                .cors(cors -> cors.configurationSource(source))  // CORS 설정 적용
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()  // Preflight 요청 허용
@@ -44,16 +45,4 @@ public class ProjectConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true);
-//        config.setAllowedOrigins(Collections.singletonList("*"));  // 모든 출처 허용
-//        config.setAllowedMethods(Collections.singletonList("*"));   // 모든 HTTP 메서드 허용
-//        config.setAllowedHeaders(Collections.singletonList("*"));   // 모든 헤더 허용
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
 }
