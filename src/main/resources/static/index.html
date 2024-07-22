@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>madcamp4_backend</title>]
-    <text>hello world</text>
+    <title>Login</title>
 </head>
 <body>
-
+<form action="/login" method="post">
+    <label for="name">name:</label>
+    <input type="text" id="name" name="username"/>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"/>
+    <button type="submit">Login</button>
+</form>
 </body>
 </html>
