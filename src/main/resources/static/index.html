@@ -1,15 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <title>User List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-<form action="/login" method="post">
-    <label for="name">name:</label>
-    <input type="text" id="name" name="username"/>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password"/>
-    <button type="submit">Login</button>
-</form>
+<h1>User List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <!-- 추가 필드가 있을 경우 여기에 추가 -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <!-- 추가 필드가 있을 경우 여기에 추가 -->
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
