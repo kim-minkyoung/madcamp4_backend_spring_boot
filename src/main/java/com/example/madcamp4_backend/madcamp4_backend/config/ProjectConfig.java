@@ -20,7 +20,7 @@ public class ProjectConfig {
                 .cors(c -> {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(List.of("http://localhost:8080", "test.com"));
+                        config.setAllowedOrigins(List.of("http://localhost:3000"));
                         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
                         return config;
                     };
