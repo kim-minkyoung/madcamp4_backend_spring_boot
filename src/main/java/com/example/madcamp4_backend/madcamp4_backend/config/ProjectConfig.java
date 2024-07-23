@@ -13,6 +13,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.logging.Logger;
 
@@ -30,9 +31,7 @@ public class ProjectConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()  // Preflight 요청 허용
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // OPTIONS 요청 허용
-                        .requestMatchers(HttpMethod.GET, "/challenges/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/feeds/**").permitAll()
-                        .requestMatchers("/login/kakao").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users").permitAll()  // /users 엔드포인트 허용
                         .anyRequest().authenticated())  // 나머지 요청은 인증 필요
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -47,10 +46,10 @@ public class ProjectConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        // 아래의 origin은 실제 출처로 변경해야 합니다
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-        configuration.setAllowedMethods(Collections.singletonList("*"));  // 모든 HTTP 메서드 허용
-        configuration.setAllowedHeaders(Collections.singletonList("*"));  // 모든 헤더 허용
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));  // 실제 출처로 변경 필요
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 허용할 메서드
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));  // 허용할 헤더
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));  // 클라이언트가 사용할 수 있는 헤더
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
