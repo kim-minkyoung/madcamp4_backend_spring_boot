@@ -6,6 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -22,16 +23,19 @@ public class ProjectConfig {
     private static final Logger logger = Logger.getLogger(ProjectConfig.class.getName());
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // CORS 설정 적용
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()  // Preflight 요청 허용
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // OPTIONS 요청 허용
+                        .requestMatchers(HttpMethod.GET, "/challenges/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/feeds/**").permitAll()
+                        .requestMatchers("/login/kakao").permitAll()
                         .anyRequest().authenticated())  // 나머지 요청은 인증 필요
-                .exceptionHandling(exceptions -> exceptions
-                        .accessDeniedPage("/403"));  // 권한 거부 페이지 설정
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // 콘솔 로그 찍기
         logger.info("SecurityFilterChain configured with CORS and CSRF settings.");
