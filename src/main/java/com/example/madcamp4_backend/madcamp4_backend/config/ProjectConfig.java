@@ -46,7 +46,7 @@ public class ProjectConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));  // 실제 출처로 변경 필요
+        configuration.setAllowedOrigins(Arrays.asList("http://3.39.212.221", "http://3.39.212.221:80"));  // 실제 출처로 변경
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 허용할 메서드
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));  // 허용할 헤더
         configuration.setExposedHeaders(Arrays.asList("Authorization"));  // 클라이언트가 사용할 수 있는 헤더
