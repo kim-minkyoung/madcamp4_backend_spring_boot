@@ -36,7 +36,7 @@ public class ProjectConfig {
         return new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response, jakarta.servlet.FilterChain filterChain) throws jakarta.servlet.ServletException, IOException {
-                response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+                response.addHeader("Access-Control-Allow-Origin", "http://3.39.212.221");
                 response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 response.addHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
                 response.addHeader("Access-Control-Expose-Headers", "Authorization");
