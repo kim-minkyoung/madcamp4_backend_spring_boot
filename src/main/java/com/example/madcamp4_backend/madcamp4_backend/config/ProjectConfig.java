@@ -2,8 +2,15 @@ package com.example.madcamp4_backend.madcamp4_backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 public class ProjectConfig {
@@ -15,8 +22,31 @@ public class ProjectConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowCredentials(true);
+                        .allowedMethods("*")
+                        .allowedHeaders("Authorization", "Content-Type", "Accept")
+                        .exposedHeaders("Authorization")
+//                        .allowCredentials(true)
+                        .maxAge(3600);
+            }
+        };
+    }
+
+    @Bean
+    public OncePerRequestFilter corsFilter() {
+        return new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response, jakarta.servlet.FilterChain filterChain) throws jakarta.servlet.ServletException, IOException {
+                response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+                response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                response.addHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+                response.addHeader("Access-Control-Expose-Headers", "Authorization");
+                response.addHeader("Access-Control-Allow-Credentials", "true");
+
+                if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                } else {
+                    filterChain.doFilter(request, response);
+                }
             }
         };
     }
